@@ -59,6 +59,8 @@ class fileEditor{
         cout << "===================================================\n";
         cout << "pilih file(tanpa spasi): ";
         cin >> namaFile;
+        cin.ignore(); // ini klo gk ada nanti di like bagian while(true), itu "-=" jalan 2 kali ntah knp
+        
         //pengecekan input, ada atau gk adanya nama file tsb
         for (int i = 0; i < listNamaFileTXT.size(); i++){
             // bila ketemu
@@ -75,6 +77,7 @@ class fileEditor{
         // klo gk ada dan klo ada
         if (!isFound){
             cout << "\nfile dengan nama '" << namaFile << "' tidak ditemukan, mohon dicoba lagi\n";
+            return;
         } else if (isFound){
             cout << "\nIsi teks boleh ada spasi, dan bila ingin keluar, ketik 'q' saja lalu tekan [ENTER]\n";
             cout << "======================================================\n";
