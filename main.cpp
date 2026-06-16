@@ -1,16 +1,21 @@
 #include <iostream>
 #include <vector>
 #include <fstream> 
+#include <string>
 using namespace std;
 
 class fileEditor{
     private:
+    bool isFound;
     string isiText;
     string namaFile;
     vector<string> listNamaFileTXT;
 
     
     public:
+    //set awal2
+    fileEditor(){ isFound = false; }
+
     void buatFile(){
         //buat file
         cout << "\nMasukan nama file yg akan dibuat(tanpa spasi):\n";
@@ -37,16 +42,59 @@ class fileEditor{
         file.close(); //di close setelahny
     }
     void editFile(){
+        ofstream editFile;
+
         // cek apakah dah ada file atau blm sebelumny
         if (listNamaFileTXT.empty()){
-            cout << "\nBelum ada file yg dibuat, silahkan buat dulu file\n";
+            cout << "\nBelum ada file yg dibuat, silahkan buat file dulu\n";
             return;
+        }
+        //penyebutan semua file, biar user bisa tau file mana yg ingin dibuat
+        cout << "\nMasukan nama file yg ingin di edit isinya\n";
+        cout << "berikut file2 teks yg sudah dibuat sebelumnya:\n";
+        for(int i = 0; i < listNamaFileTXT.size(); i++){
+            cout << listNamaFileTXT.at(i) << ".txt ";
+        }
+        cout << endl;
+        cout << "===================================================\n";
+        cout << "pilih file(tanpa spasi): ";
+        cin >> namaFile;
+        //pengecekan input, ada atau gk adanya nama file tsb
+        for (int i = 0; i < listNamaFileTXT.size(); i++){
+            // bila ketemu
+            if (namaFile == listNamaFileTXT.at(i) + ".txt"){ //ketauan dan input ny nambahin ".txt" 
+                editFile.open("txtFile\\" + namaFile);
+                isFound = true;
+                break; // langsung keluar klo dah ketauan
+            } else if (namaFile == listNamaFileTXT.at(i)){ //ketauan tapi gk pake ".txt"
+                editFile.open("txtFile\\" + namaFile + ".txt");
+                isFound = true;
+                break; // langsung keluar klo dah ketauan
+            }
+        } 
+        // klo gk ada dan klo ada
+        if (!isFound){
+            cout << "\nfile dengan nama '" << namaFile << "' tidak ditemukan, mohon dicoba lagi\n";
+        } else if (isFound){
+            cout << "\nIsi teks boleh ada spasi, dan bila ingin keluar, ketik 'q' saja lalu tekan [ENTER]\n";
+            cout << "======================================================\n";
+            while (true){
+                cout << "-= ";
+                getline(cin, isiText);
+
+                if (isiText == "q") break; // langsung keluar bila q saja yg diketik
+
+                editFile << isiText << endl; //dimasukan kesini                
+            }
+            cout << "\nPengeditan file teks telah selesai\n";
+            editFile.close();
+            isFound = false; //set ulang
         }
     }
     void outputFileText(){
         // cek apakah dah ada file atau blm sebelumny
         if (listNamaFileTXT.empty()){
-            cout << "\nBelum ada file yg dibuat, silahkan buat dulu file\n";
+            cout << "\nBelum ada file yg dibuat, silahkan buat file dulu\n";
             return;
         }
     }
