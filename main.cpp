@@ -141,6 +141,52 @@ class fileEditor{
             outputFile.close();
         }
     }
+    void deleteFile(){
+        string delFileName;
+        int indexFile;
+
+        // cek apakah dah ada file atau blm sebelumny
+        if (listNamaFileTXT.empty()){
+            cout << "\nBelum ada file yg dibuat, silahkan buat file dulu\n";
+            return;
+        }
+        //cek input mau yg mana
+        cout << "\nMasukan nama file yg ingin dihapus(tanpa spasi)\n";
+        cout << "berikut nama2 file yg tersedia:\n";
+        cout << "-------------------------------------------------------\n";
+        for(int i = 0; i < listNamaFileTXT.size(); i++){
+            cout << listNamaFileTXT.at(i) << ".txt ";
+        }
+        cout << "\n=======================================================\n";
+        cout << "pilih file(tanpa spasi): ";
+        cin >> namaFile;
+        cin.ignore(); // ini klo gk ada nanti di like bagian while(true), itu "-=" jalan 2 kali ntah knp
+        
+        //pengecekan input, ada atau gk adanya nama file tsb
+        for (int i = 0; i < listNamaFileTXT.size(); i++){
+            // bila ketemu
+            if (namaFile == listNamaFileTXT.at(i) + ".txt"){ //ketauan dan input ny nambahin ".txt" 
+                delFileName = "txtFile\\" + namaFile;
+                indexFile = i;
+                isFound = true;
+                break; // langsung keluar 
+            } else if (namaFile == listNamaFileTXT.at(i)){ //ketauan tapi gk pake ".txt"
+                delFileName = "txtFile\\" + namaFile + ".txt";
+                indexFile = i;
+                isFound = true;
+                break; // langsung keluar klo dah ketauan
+            }
+        } 
+
+        if (!isFound){
+            cout << "\nfile dengan nama '" << namaFile << "' tidak ditemukan, mohon dicoba lagi\n";
+            return;
+        } else if (isFound){
+            remove(delFileName.c_str()); //hapus file, pakai c_str() karna minta string ny C (tau dari internet sy)
+            cout << "\nfile dengan nama '" << namaFile << "' berhasil dihapus\n";
+            listNamaFileTXT.erase(listNamaFileTXT.begin() + indexFile); //hapus nama file dari vector
+        }
+    }
 };
 
 int main(){
@@ -155,7 +201,8 @@ int main(){
         cout << "1. Buat file\n";
         cout << "2. Edit suatu file\n";
         cout << "3. Output teks yg ada didalam suatu file\n";
-        cout << "4. keluar\n";
+        cout << "4. hapus suatu file\n";
+        cout << "5. keluar\n";
         cout << "============================================\n";
         cout << "Pilihan: ";
         cin >> pilihan;
@@ -171,13 +218,16 @@ int main(){
                 f.outputFileText();
                 break;
             case '4':
+                f.deleteFile();
+                break;
+            case '5':
                 // keluar
                 break;
             default: 
                 cout << "\n Input tidak valid, coba lagi\n";
                 break;
         }
-    } while(pilihan != '4');
+    } while(pilihan != '5');
 }
 
 
