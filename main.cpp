@@ -52,6 +52,7 @@ class fileEditor{
         //penyebutan semua file, biar user bisa tau file mana yg ingin dibuat
         cout << "\nMasukan nama file yg ingin di edit isinya\n";
         cout << "berikut file2 teks yg sudah dibuat sebelumnya:\n";
+        cout << "----------------------------------------------\n";
         for(int i = 0; i < listNamaFileTXT.size(); i++){
             cout << listNamaFileTXT.at(i) << ".txt ";
         }
@@ -95,13 +96,50 @@ class fileEditor{
         }
     }
     void outputFileText(){
+        ifstream outputFile;
+
         // cek apakah dah ada file atau blm sebelumny
         if (listNamaFileTXT.empty()){
             cout << "\nBelum ada file yg dibuat, silahkan buat file dulu\n";
             return;
         }
-    }
+        //cek input mau yg mana
+        cout << "\nMasukan nama file yg ingin di output-kan(tanpa spasi)\n";
+        cout << "berikut nama2 file yg tersedia:\n";
+        cout << "-------------------------------------------------------\n";
+        for(int i = 0; i < listNamaFileTXT.size(); i++){
+            cout << listNamaFileTXT.at(i) << ".txt ";
+        }
+        cout << "=======================================================\n";
+        cout << "pilih file(tanpa spasi): ";
+        cin >> namaFile;
+        cin.ignore(); // ini klo gk ada nanti di like bagian while(true), itu "-=" jalan 2 kali ntah knp
+        
+        //pengecekan input, ada atau gk adanya nama file tsb
+        for (int i = 0; i < listNamaFileTXT.size(); i++){
+            // bila ketemu
+            if (namaFile == listNamaFileTXT.at(i) + ".txt"){ //ketauan dan input ny nambahin ".txt" 
+                outputFile.open("txtFile\\" + namaFile);
+                isFound = true;
+                break; // langsung keluar klo dah ketauan
+            } else if (namaFile == listNamaFileTXT.at(i)){ //ketauan tapi gk pake ".txt"
+                outputFile.open("txtFile\\" + namaFile + ".txt");
+                isFound = true;
+                break; // langsung keluar klo dah ketauan
+            }
+        } 
 
+        if (!isFound){
+            cout << "\nfile dengan nama '" << namaFile << "' tidak ditemukan, mohon dicoba lagi\n";
+            return;
+        } else if (isFound){
+            while(getline(outputFile, isiText)){
+                cout << isiText << endl;
+            }
+            //menutup file
+            outputFile.close();
+        }
+    }
 };
 
 int main(){
