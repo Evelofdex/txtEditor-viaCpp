@@ -139,6 +139,7 @@ class fileEditor{
             }
             //menutup file
             outputFile.close();
+            isFound = false; //set ulang
         }
     }
     void deleteFile(){
@@ -185,7 +186,24 @@ class fileEditor{
             remove(delFileName.c_str()); //hapus file, pakai c_str() karna minta string ny C (tau dari internet sy)
             cout << "\nfile dengan nama '" << namaFile << "' berhasil dihapus\n";
             listNamaFileTXT.erase(listNamaFileTXT.begin() + indexFile); //hapus nama file dari vector
+            isFound = false; //set ulang
         }
+        
+    }
+    void deleteAllFiles(){
+        //klo kosong gk akan jalan sepenuhnya fungsi
+        if (listNamaFileTXT.empty()){
+            cout << "\n...Tidak ada file yg dihapus\n";
+            return;
+        }
+            
+        cout << "\nMenghapus semua file sebelum keluar dari program...\n";
+        //penyebutan file yg dihapus secara eksplisit
+        for(int i = 0; i < listNamaFileTXT.size(); i++){
+            cout << listNamaFileTXT.at(i) + ".txt..." << endl;
+            remove(("txtFile\\" + listNamaFileTXT.at(i) + ".txt").c_str());  //hapus file tsb
+        } 
+        cout << "\n...Seluruh file telah dihapus!\n";
     }
 };
 
@@ -221,10 +239,12 @@ int main(){
                 f.deleteFile();
                 break;
             case '5':
+                f.deleteAllFiles();
+                cout << "\nKeluar dari program...\n";
                 // keluar
                 break;
             default: 
-                cout << "\n Input tidak valid, coba lagi\n";
+                cout << "\nInput tidak valid, coba lagi\n";
                 break;
         }
     } while(pilihan != '5');
