@@ -212,10 +212,16 @@ int main(){
     char pilihan;
     fileEditor f;
 
-    do {
+    cout << "\nProgram created by: Evelofdex, Ver: 0.1\n";
+    cout << "Copyright 2026\n\n";
 
+    cout << "NOTE: program ini hanya suatu project percobaan, yg dimana program dapat membuat, menghapus\n";
+    cout << "      dan mengedit isi teks dari file dengan format '.txt', dan dalam akhri program seluruh file akan\n";
+    cout << "      dihapus secara otomatis, jadi jangan coba2 menyimpan note/teks yg sekiranya penting, karna nantinya akan terhapus\n";
+
+    do {
         cout << endl;
-        cout << "============================================\n";
+        cout << "\n============================================\n";
         cout << "1. Buat file\n";
         cout << "2. Edit suatu file\n";
         cout << "3. Output teks yg ada didalam suatu file\n";
