@@ -58,7 +58,7 @@ class fileEditor{
         }
         cout << endl;
         cout << "===================================================\n";
-        cout << "pilih file(tanpa spasi): ";
+        cout << "Masukan nama file(tanpa spasi): ";
         cin >> namaFile;
         cin.ignore(); // ini klo gk ada nanti di like bagian while(true), itu "-=" jalan 2 kali ntah knp
         
@@ -110,7 +110,7 @@ class fileEditor{
         for(int i = 0; i < listNamaFileTXT.size(); i++){
             cout << listNamaFileTXT.at(i) << ".txt ";
         }
-        cout << "=======================================================\n";
+        cout << "\n=======================================================\n";
         cout << "pilih file(tanpa spasi): ";
         cin >> namaFile;
         cin.ignore(); // ini klo gk ada nanti di like bagian while(true), itu "-=" jalan 2 kali ntah knp
@@ -133,6 +133,7 @@ class fileEditor{
             cout << "\nfile dengan nama '" << namaFile << "' tidak ditemukan, mohon dicoba lagi\n";
             return;
         } else if (isFound){
+            cout << endl;
             while(getline(outputFile, isiText)){
                 cout << isiText << endl;
             }
